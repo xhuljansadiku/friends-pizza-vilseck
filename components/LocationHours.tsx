@@ -3,6 +3,8 @@ import { Stamp } from "@/components/ui/Stamp";
 import { Leader } from "@/components/ui/Leader";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/Reveal";
+import { OpeningStatus, WeekHours } from "@/components/OpeningHours";
+import { MapEmbed } from "@/components/Consent";
 import { business, openingHours } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
@@ -16,13 +18,7 @@ export function LocationHours({ locale }: { locale: Locale }) {
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
     business.address.full
   )}`;
-  const open = `${openingHours.opens} – ${openingHours.closes}`;
-
-  const hoursRows = [
-    { label: location.days.monWed, value: open },
-    { label: location.days.thu, value: dict.common.closed },
-    { label: location.days.friSun, value: open },
-  ];
+  const open = `${openingHours.opens}-${openingHours.closes}`;
   const serviceRows = [
     { label: location.deliveryLabel, value: location.deliveryValue },
     { label: location.pickupLabel, value: location.pickupValue },
@@ -30,7 +26,7 @@ export function LocationHours({ locale }: { locale: Locale }) {
   ];
 
   return (
-    <section id="location" className="bg-char px-6 py-20 md:py-28">
+    <section id="location" className="surface-dark bg-char px-6 py-20 md:py-28">
       <div className="mx-auto grid max-w-(--container-page) gap-12 md:grid-cols-2">
         <Reveal className="text-center md:text-left">
           <Stamp tone="cream">{location.stamp}</Stamp>
@@ -45,18 +41,24 @@ export function LocationHours({ locale }: { locale: Locale }) {
           <h3 className="mt-8 font-mono text-xs font-bold uppercase tracking-wider text-gold">
             {location.hoursTitle}
           </h3>
-          <div className="mt-2 divide-y divide-cream/10 text-left">
-            {hoursRows.map((row) => (
-              <Leader key={row.label} tone="cream" label={row.label} value={row.value} />
-            ))}
+          <OpeningStatus
+            labels={dict.status}
+            fallback={dict.hero.factHours}
+            className="mt-3 rounded-full border border-cream/15 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wide text-cream"
+          />
+          <div className="mt-5">
+            <WeekHours labels={location} />
           </div>
+          <p className="mt-3 font-body text-sm text-cream/60">
+            {open} · {location.restDayNote}
+          </p>
 
           <h3 className="mt-8 font-mono text-xs font-bold uppercase tracking-wider text-gold">
             {location.serviceTitle}
           </h3>
           <div className="mt-2 divide-y divide-cream/10 text-left">
             {serviceRows.map((row) => (
-              <Leader key={row.label} tone="cream" label={row.label} value={row.value} />
+              <Leader key={row.label} tone="cream" label={row.label} value={row.value} wrapValue />
             ))}
           </div>
 
@@ -69,15 +71,11 @@ export function LocationHours({ locale }: { locale: Locale }) {
 
         <Reveal delay={0.1}>
           <div className="overflow-hidden rounded-2xl border-2 border-cream/20">
-            <iframe
+            <MapEmbed
               src={mapSrc}
-              width="100%"
-              height="420"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
               title={location.mapTitle}
-              className="block h-[420px] w-full"
+              mapsUrl={directionsUrl}
+              labels={dict.cookies}
             />
           </div>
         </Reveal>

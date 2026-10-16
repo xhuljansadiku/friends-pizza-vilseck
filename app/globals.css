@@ -7,6 +7,9 @@
   --color-cream: #fbf7ee;
   --color-char: #161311;
   --color-char-light: #211c19;
+  /* Fixed colours that never flip with the theme (e.g. text on gold). */
+  --color-coal: #0a0a0a;
+  --color-paper: #fbf7ee;
 
   --font-display: var(--font-sora);
   --font-body: var(--font-inter);
@@ -15,7 +18,79 @@
   --container-page: 1200px;
 }
 
+/*
+ * Dark mode flips the page palette: "cream" (page background) and "ink"
+ * (text) swap. Follows the system setting unless the visitor picked a theme,
+ * which is stored as data-theme on <html> (set before paint in the layout).
+ */
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --color-cream: #14110f;
+    --color-ink: #f6f1e6;
+    --color-char: #1f1a17;
+    --color-char-light: #2b2420;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --color-cream: #14110f;
+      --color-ink: #f6f1e6;
+      --color-char: #1f1a17;
+      --color-char-light: #2b2420;
+    }
+  }
+
+  /* Sections that are dark in both themes keep the light-mode pairing,
+     so text-cream stays light and text-ink stays dark inside them. */
+  .surface-dark {
+    --color-cream: #fbf7ee;
+    --color-ink: #0a0a0a;
+  }
+
+  /* The logo is black lettering; give it a light plate on dark pages (square corners). */
+  :root[data-theme="dark"] .logo-plate {
+    background: var(--color-paper);
+    border-radius: 0;
+    padding: 0.25rem 0.75rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .logo-plate {
+      background: var(--color-paper);
+      border-radius: 0;
+      padding: 0.25rem 0.75rem;
+    }
+  }
+
+  /* Theme toggle shows a moon in light mode and a sun in dark mode. */
+  .theme-icon-sun {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .theme-icon-sun {
+    display: block;
+  }
+
+  :root[data-theme="dark"] .theme-icon-moon {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-icon-sun {
+      display: block;
+    }
+
+    :root:not([data-theme="light"]) .theme-icon-moon {
+      display: none;
+    }
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -42,7 +117,7 @@
 
   ::selection {
     background: var(--color-gold);
-    color: var(--color-ink);
+    color: var(--color-coal);
   }
 
   :focus-visible {

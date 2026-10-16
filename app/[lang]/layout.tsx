@@ -4,6 +4,8 @@ import { sora, inter, spaceMono } from "@/lib/fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileCallToAction } from "@/components/MobileCallToAction";
+import { CookieBanner } from "@/components/Consent";
+import { themeInitScript } from "@/lib/theme";
 import { business, deliveryArea, menu, openingHours } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import { hasLocale, localePath, locales, t, type Locale } from "@/lib/i18n";
@@ -96,9 +98,11 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   return (
     <html
       lang={lang}
+      suppressHydrationWarning
       className={`${sora.variable} ${inter.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd(lang)) }}
@@ -107,7 +111,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       <body className="min-h-full flex flex-col pb-20 md:pb-0">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:font-display focus:text-sm focus:font-semibold focus:text-ink"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:font-display focus:text-sm focus:font-semibold focus:text-coal"
         >
           {dict.nav.skipToContent}
         </a>
@@ -117,6 +121,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         </main>
         <Footer locale={lang} />
         <MobileCallToAction locale={lang} />
+        <CookieBanner labels={dict.cookies} privacyHref={localePath(lang, "/datenschutz")} />
       </body>
     </html>
   );

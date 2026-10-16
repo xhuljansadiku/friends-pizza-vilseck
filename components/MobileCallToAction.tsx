@@ -22,7 +22,7 @@ export function MobileCallToAction({ locale }: { locale: Locale }) {
         href={business.orderUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-gold font-display text-sm font-semibold text-ink transition-transform active:scale-[0.97]"
+        className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-gold font-display text-sm font-semibold text-coal transition-transform active:scale-[0.97]"
       >
         {common.orderNow}
         <ExternalLink size={16} aria-hidden="true" />

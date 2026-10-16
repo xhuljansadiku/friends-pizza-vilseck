@@ -4,6 +4,8 @@ type LeaderProps = {
   description?: string;
   tag?: string;
   tone?: "ink" | "cream";
+  /** Let a long text value wrap instead of forcing the row wider. */
+  wrapValue?: boolean;
 };
 
 export function Leader({
@@ -12,6 +14,7 @@ export function Leader({
   description,
   tag,
   tone = "ink",
+  wrapValue = false,
 }: LeaderProps) {
   const textTone = tone === "ink" ? "text-ink" : "text-cream";
   const mutedTone = tone === "ink" ? "text-ink/60" : "text-cream/60";
@@ -19,13 +22,13 @@ export function Leader({
 
   return (
     <div className="flex items-baseline gap-3 py-3">
-      <div className="flex flex-col">
-        <div className="flex items-baseline gap-2">
+      <div className="flex min-w-0 flex-col">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
           <span className={`font-display text-base font-semibold ${textTone}`}>
             {label}
           </span>
           {tag && (
-            <span className="rounded-full bg-gold px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-ink">
+            <span className="rounded-full bg-gold px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-coal">
               {tag}
             </span>
           )}
@@ -35,7 +38,11 @@ export function Leader({
         )}
       </div>
       <span className={`flex-1 border-b border-dotted ${dotTone} translate-y-[-4px]`} aria-hidden="true" />
-      <span className={`font-mono text-base font-bold whitespace-nowrap ${textTone}`}>
+      <span
+        className={`font-mono text-base font-bold ${
+          wrapValue ? "min-w-0 text-right" : "whitespace-nowrap"
+        } ${textTone}`}
+      >
         {value}
       </span>
     </div>

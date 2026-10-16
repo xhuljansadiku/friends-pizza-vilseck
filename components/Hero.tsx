@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Clock, Bike } from "lucide-react";
+import { MapPin, Bike } from "lucide-react";
+import { OpeningStatus } from "@/components/OpeningHours";
 import { Stamp } from "@/components/ui/Stamp";
 import { Button } from "@/components/ui/Button";
-import { HeroPizza } from "@/components/illustrations/HeroPizza";
+import Image from "next/image";
 import { business } from "@/lib/content";
 import type { Dictionary } from "@/lib/dictionaries";
 
@@ -15,15 +16,15 @@ const textVariants = {
 
 type HeroProps = {
   copy: Dictionary["hero"];
+  statusLabels: Dictionary["status"];
   orderLabel: string;
   menuLabel: string;
   menuHref: string;
 };
 
-export function Hero({ copy, orderLabel, menuLabel, menuHref }: HeroProps) {
+export function Hero({ copy, statusLabels, orderLabel, menuLabel, menuHref }: HeroProps) {
   const quickFacts = [
     { icon: MapPin, label: `${business.address.street}, ${business.address.city}` },
-    { icon: Clock, label: copy.factHours },
     { icon: Bike, label: copy.factService },
   ];
 
@@ -47,7 +48,7 @@ export function Hero({ copy, orderLabel, menuLabel, menuHref }: HeroProps) {
           >
             {copy.titleStart}
             <br />
-            {copy.titleEnd} <span className="rounded-md bg-gold px-2 py-0.5">Friends</span>.
+            {copy.titleEnd} <span className="rounded-md bg-gold px-2 py-0.5 text-coal">Friends</span>.
           </motion.h1>
 
           <motion.p
@@ -76,6 +77,7 @@ export function Hero({ copy, orderLabel, menuLabel, menuHref }: HeroProps) {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-10 flex flex-col items-center gap-3 font-mono text-xs uppercase tracking-wide text-ink/70 sm:flex-row sm:gap-6 md:items-start"
           >
+            <OpeningStatus labels={statusLabels} fallback={copy.factHours} />
             {quickFacts.map(({ icon: Icon, label }) => (
               <div key={label} className="flex items-center gap-2">
                 <Icon size={16} className="text-gold" aria-hidden="true" />
@@ -86,7 +88,7 @@ export function Hero({ copy, orderLabel, menuLabel, menuHref }: HeroProps) {
         </motion.div>
 
         <motion.div
-          className="relative mx-auto w-full max-w-md"
+          className="relative mx-auto w-full max-w-lg"
           initial={{ opacity: 0, scale: 0.85, rotate: -8 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
@@ -95,7 +97,16 @@ export function Hero({ copy, orderLabel, menuLabel, menuHref }: HeroProps) {
             className="absolute inset-0 -z-10 rounded-full bg-gold/30 blur-3xl"
             aria-hidden="true"
           />
-          <HeroPizza className="w-full" />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border-4 border-ink shadow-[8px_8px_0_0_var(--color-gold)] rotate-2">
+            <Image
+              src="/images/friends-pizza-rucola.jpg"
+              alt={copy.imageAlt}
+              fill
+              priority
+              sizes="(min-width: 768px) 512px, 100vw"
+              className="object-cover"
+            />
+          </div>
         </motion.div>
       </div>
     </section>

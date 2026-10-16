@@ -315,8 +315,8 @@ export default async function DatenschutzPage({ params }: PageProps<"/[lang]/dat
               </li>
             </ul>
             <p>
-              Wenn Sie die Verarbeitung eingeschränkt haben, dürfen diese Daten
-              – von ihrer Speicherung abgesehen – nur mit Ihrer Einwilligung
+              Wenn Sie die Verarbeitung eingeschränkt haben, dürfen diese Daten,
+              von ihrer Speicherung abgesehen, nur mit Ihrer Einwilligung
               oder zur Geltendmachung, Ausübung oder Verteidigung von
               Rechtsansprüchen oder zum Schutz der Rechte einer anderen
               natürlichen oder juristischen Person oder aus Gründen eines
@@ -358,16 +358,27 @@ export default async function DatenschutzPage({ params }: PageProps<"/[lang]/dat
               auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der
               Zweck für die Datenspeicherung entfällt (z. B. nach
               abgeschlossener Bearbeitung Ihres Anliegens). Zwingende
-              gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen –
+              gesetzliche Bestimmungen, insbesondere Aufbewahrungsfristen,
               bleiben unberührt.
             </p>
           </Sub>
           <Sub title="Cookies">
             <p>
               Diese Website selbst setzt keine Cookies und verwendet keine
-              Analyse- oder Tracking-Dienste. Beim Laden der eingebetteten
-              Google-Maps-Karte kann Google eigene Cookies setzen (siehe
-              Abschnitt 5).
+              Analyse- oder Tracking-Dienste. Im lokalen Speicher Ihres
+              Browsers (Local Storage) speichern wir lediglich Ihre Auswahl
+              für den hellen oder dunklen Modus sowie Ihre
+              Einwilligungsentscheidung. Diese Speicherung ist für die von
+              Ihnen gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2
+              Nr. 2 TDDDG).
+            </p>
+            <p>
+              Externe Inhalte wie Google Maps werden erst geladen, nachdem Sie
+              über unser Cookie-Banner oder den Button „Karte laden“
+              eingewilligt haben. Beim Laden kann Google eigene Cookies setzen
+              (siehe Abschnitt 5). Ihre Auswahl können Sie jederzeit über
+              „Cookie-Einstellungen“ im Fußbereich der Website ändern oder
+              widerrufen.
             </p>
           </Sub>
         </Section>
@@ -387,14 +398,12 @@ export default async function DatenschutzPage({ params }: PageProps<"/[lang]/dat
               diese Datenübertragung.
             </p>
             <p>
-              Die Nutzung von Google Maps erfolgt im Interesse einer
-              ansprechenden Darstellung unserer Online-Angebote und einer
-              leichten Auffindbarkeit unseres Standorts. Dies stellt ein
-              berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO
-              dar. Sofern eine entsprechende Einwilligung abgefragt wurde,
-              erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6
-              Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die Einwilligung ist
-              jederzeit widerrufbar.
+              Google Maps wird nur geladen, wenn Sie über unser Cookie-Banner
+              oder den Button „Karte laden“ eingewilligt haben. Die
+              Verarbeitung erfolgt dann ausschließlich auf Grundlage Ihrer
+              Einwilligung (Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1
+              TDDDG). Die Einwilligung ist jederzeit über die
+              „Cookie-Einstellungen“ im Fußbereich widerrufbar.
             </p>
             <p>
               Google ist nach dem „EU-US Data Privacy Framework“ (DPF)

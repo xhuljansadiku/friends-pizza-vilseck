@@ -8,6 +8,7 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { MobileNav } from "@/components/MobileNav";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { business } from "@/lib/content";
 import type { Dictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
@@ -42,14 +43,14 @@ export function Header({ locale, links, nav }: HeaderProps) {
           : "bg-cream/0"
       }`}
     >
-      <div className="mx-auto flex max-w-(--container-page) items-center justify-between gap-4 px-6 py-4">
-        <Link href={links[0].href} className="flex items-center" aria-label={`${business.name} – ${nav.home}`}>
+      <div className="mx-auto flex max-w-(--container-page) items-center justify-between gap-2 px-4 py-4 sm:gap-4 sm:px-6">
+        <Link href={links[0].href} className="logo-plate flex items-center" aria-label={`${business.name} ${nav.home}`}>
           <Image
             src="/logo.png"
             alt={business.name}
             width={155}
             height={36}
-            className="h-9 w-[155px]"
+            className="h-7 w-[121px] sm:h-9 sm:w-[155px]"
             priority
           />
         </Link>
@@ -75,20 +76,22 @@ export function Header({ locale, links, nav }: HeaderProps) {
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle label={nav.toggleTheme} />
           <LanguageToggle locale={locale} label={nav.switchLanguage} />
           <Button href={business.orderUrl} external variant="primary">
             {nav.order}
           </Button>
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <LanguageToggle locale={locale} label={nav.switchLanguage} />
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle label={nav.toggleTheme} size="sm" />
+          <LanguageToggle locale={locale} label={nav.switchLanguage} size="sm" />
           <button
             ref={triggerRef}
             onClick={() => setMenuOpen(true)}
             aria-label={nav.openMenu}
-            className="flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-ink/5"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-ink/5"
           >
             <Menu size={26} aria-hidden="true" />
           </button>

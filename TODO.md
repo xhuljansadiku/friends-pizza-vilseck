@@ -7,12 +7,12 @@
 - [ ] **Vlerësimet e Google:** 3–5 vlerësime të vërteta (teksti, emri, yjet) nga Google Maps, që shtohen te `testimonials` në `lib/content.ts`. Rating-u dhe numri janë te `googleReviews`.
 - [ ] **Tuna Salad (€8.50):** është në sistemin e porosive, por jo në menunë tonë. Duhet konfirmuar.
 - [ ] **Instagram / Facebook:** lidhjet. Facebook: https://www.facebook.com/p/Friendspizza-Vilseck-100086550342046/
-- [ ] **Fotot:** ushqimi dhe lokali.
+- [x] **Fotot:** 5 foto te `public/images/` (hero, galeria, About). Origjinalet 1–13.jpg dhe screenshot-i te `public/` duhen fshirë ose zhvendosur para publikimit. 11.jpg (fëmijë) nuk përdoret pa pëlqimin e prindërve.
 - [ ] **Hostingu:** ku do publikohet faqja. Ndërruesi EN/DE (`proxy.ts`) kërkon host që ekzekuton Next.js (p.sh. Vercel), jo hosting statik.
 
 ## Vendim
 
-- [ ] **Google Maps:** harta ngarkohet pa pëlqimin e vizitorit (DSGVO). Propozimi: "kliko për të ngarkuar hartën".
+- [x] **Google Maps:** zgjidhur me banner cookie-sh. Harta ngarkohet vetëm pas pëlqimit ("Load map" / "Accept all"); "Cookie settings" te footer-i e rihap bannerin.
 
 ## Më vonë: teknike / SEO
 
@@ -24,6 +24,6 @@
 - [ ] Kontrollo çfarë shërbimesh të jashtme përdor faqja realisht.
 - [ ] Datenschutz: hoster-i i saktë (tani shkruan One.com).
 - [ ] Datenschutz: DISH si ofruesi i porosive online.
-- [ ] Datenschutz: Google Maps sipas vendimit për hartën.
+- [x] Datenschutz: Google Maps dhe Cookies përditësuar sipas bannerit (pëlqim, Art. 6 Abs. 1 lit. a DSGVO, § 25 TDDDG).
 - [ ] Impressum: USt-IdNr., nëse ka.
 - [ ] Pronari (Fatmir Fazliji) lexon dhe konfirmon të dy tekstet.

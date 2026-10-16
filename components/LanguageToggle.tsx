@@ -9,10 +9,11 @@ type LanguageToggleProps = {
   locale: Locale;
   label: string;
   tone?: "ink" | "cream";
+  size?: "md" | "sm";
   onNavigate?: () => void;
 };
 
-export function LanguageToggle({ locale, label, tone = "ink", onNavigate }: LanguageToggleProps) {
+export function LanguageToggle({ locale, label, tone = "ink", size = "md", onNavigate }: LanguageToggleProps) {
   const segment = useSelectedLayoutSegment();
   const border = tone === "ink" ? "border-ink" : "border-cream/40";
   const idle = tone === "ink" ? "text-ink hover:bg-ink/5" : "text-cream hover:bg-cream/10";
@@ -33,8 +34,10 @@ export function LanguageToggle({ locale, label, tone = "ink", onNavigate }: Lang
             lang={option}
             onClick={onNavigate}
             aria-current={active ? "true" : undefined}
-            className={`flex min-h-9 min-w-11 items-center justify-center px-3 transition-colors ${
-              active ? "bg-gold text-ink" : idle
+            className={`flex items-center justify-center transition-colors ${
+              size === "sm" ? "min-h-8 min-w-9 px-2" : "min-h-9 min-w-11 px-3"
+            } ${
+              active ? "bg-gold text-coal" : idle
             }`}
           >
             {option}

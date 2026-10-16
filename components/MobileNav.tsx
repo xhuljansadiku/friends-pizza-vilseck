@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { business } from "@/lib/content";
 import type { Dictionary } from "@/lib/dictionaries";
 import type { NavLink } from "@/lib/navigation";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 type MobileNavProps = {
   open: boolean;
@@ -71,7 +72,7 @@ export function MobileNav({ open, onClose, triggerRef, links, activeSegment, nav
           aria-modal="true"
           aria-label={nav.siteNavigation}
           ref={dialogRef}
-          className="fixed inset-0 z-50 bg-ink md:hidden"
+          className="surface-dark fixed inset-0 z-50 bg-ink md:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -87,7 +88,8 @@ export function MobileNav({ open, onClose, triggerRef, links, activeSegment, nav
             exit={{ y: -16, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-between">
+              <ThemeToggle label={nav.toggleTheme} tone="cream" />
               <button
                 ref={closeButtonRef}
                 onClick={onClose}

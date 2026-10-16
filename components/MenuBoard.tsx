@@ -16,7 +16,7 @@ export function MenuBoard({ locale, headingAs: Heading = "h2" }: MenuBoardProps)
   const CategoryHeading = Heading === "h1" ? "h2" : "h3";
 
   return (
-    <section id="menu" className="bg-char px-6 py-20 md:py-28">
+    <section id="menu" className="surface-dark bg-char px-6 py-20 md:py-28">
       <div className="mx-auto max-w-(--container-page)">
         <Reveal className="text-center md:text-left">
           <Stamp tone="cream">{dict.menu.stamp}</Stamp>

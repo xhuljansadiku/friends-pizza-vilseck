@@ -23,7 +23,7 @@ export function MenuPreview({ locale }: { locale: Locale }) {
   const columns = [items.slice(0, mid), items.slice(mid)];
 
   return (
-    <section className="bg-char px-6 py-20 md:py-28">
+    <section className="surface-dark bg-char px-6 py-20 md:py-28">
       <div className="mx-auto max-w-(--container-page)">
         <Reveal className="text-center md:text-left">
           <Stamp tone="cream">{dict.menuPreview.stamp}</Stamp>
