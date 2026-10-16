@@ -3,6 +3,7 @@ import { Stamp } from "@/components/ui/Stamp";
 import { TicketCard } from "@/components/ui/TicketCard";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/Reveal";
+import { SocialLinks } from "@/components/SocialLinks";
 import { business } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
@@ -52,7 +53,14 @@ export function Contact({ locale, headingAs: Heading = "h2" }: ContactProps) {
           </Reveal>
         </div>
 
-        <Reveal delay={0.15} className="mt-12">
+        <Reveal delay={0.12} className="mt-10 flex flex-col items-center gap-3">
+          <p className="font-mono text-xs uppercase tracking-wide text-ink/60">
+            {dict.contact.follow}
+          </p>
+          <SocialLinks labelTemplate={dict.contact.followOn} />
+        </Reveal>
+
+        <Reveal delay={0.15} className="mt-10">
           <Button href={business.orderUrl} external variant="primary">
             {dict.nav.order}
           </Button>

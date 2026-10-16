@@ -41,6 +41,10 @@ export const business = {
   email: "info@friendspizza-vilseck.de",
   orderUrl: "https://friends-pizza.order.app.hd.digital/menus",
   owner: "Fatmir Fazliji",
+  social: {
+    instagram: "https://www.instagram.com/friendspizzavilseck/",
+    facebook: "https://www.facebook.com/profile.php?id=100086550342046",
+  },
 } as const;
 
 export const googleReviews = {

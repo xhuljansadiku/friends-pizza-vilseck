@@ -31,6 +31,7 @@ const en = {
     skipToContent: "Skip to content",
     switchLanguage: "Deutsche Version",
     toggleTheme: "Switch light / dark mode",
+    backToTop: "Back to top",
   },
   common: {
     callUs: "Call us",
@@ -134,6 +135,8 @@ const en = {
     title: "Order, ask, or just say hi.",
     call: "Call",
     email: "Email",
+    follow: "Follow us",
+    followOn: "Follow us on {network}",
   },
   cookies: {
     title: "Cookies & privacy",
@@ -156,6 +159,13 @@ const en = {
   footer: {
     rights: "All rights reserved.",
     footerNav: "Footer",
+    pages: "Explore",
+    tagline: "Pizza, burgers and finger food from the Marktplatz in Vilseck. Pickup, or delivery across town and to Rose Barracks.",
+    ctaTitle: "Hungry?",
+    ctaText: "Order online for pickup or delivery, or just give us a call.",
+    visit: "Visit us",
+    openDays: "Mon-Wed, Fri-Sun",
+    thursday: "Thursday",
     legalNav: "Legal",
   },
   legal: {
@@ -193,6 +203,7 @@ const de: Dictionary = {
     skipToContent: "Zum Inhalt springen",
     switchLanguage: "English version",
     toggleTheme: "Hell- / Dunkelmodus wechseln",
+    backToTop: "Nach oben",
   },
   common: {
     callUs: "Anrufen",
@@ -296,6 +307,8 @@ const de: Dictionary = {
     title: "Bestellen, fragen oder einfach Hallo sagen.",
     call: "Anrufen",
     email: "E-Mail",
+    follow: "Folgen Sie uns",
+    followOn: "Folgen Sie uns auf {network}",
   },
   cookies: {
     title: "Cookies & Datenschutz",
@@ -318,6 +331,13 @@ const de: Dictionary = {
   footer: {
     rights: "Alle Rechte vorbehalten.",
     footerNav: "Fußzeile",
+    pages: "Entdecken",
+    tagline: "Pizza, Burger und Fingerfood vom Marktplatz in Vilseck. Zum Abholen oder mit Lieferung in ganz Vilseck und zur Rose Barracks.",
+    ctaTitle: "Hunger?",
+    ctaText: "Online bestellen zum Abholen oder Liefern, oder rufen Sie uns einfach an.",
+    visit: "Besuchen Sie uns",
+    openDays: "Mo-Mi, Fr-So",
+    thursday: "Donnerstag",
     legalNav: "Rechtliches",
   },
   legal: {

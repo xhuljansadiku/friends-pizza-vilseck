@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileCallToAction } from "@/components/MobileCallToAction";
 import { CookieBanner } from "@/components/Consent";
+import { BackToTop } from "@/components/BackToTop";
 import { themeInitScript } from "@/lib/theme";
 import { business, deliveryArea, menu, openingHours } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
@@ -41,6 +42,7 @@ function restaurantJsonLd(locale: Locale) {
     name: business.name,
     image: `${business.url}/logo.png`,
     url: `${business.url}${localePath(locale, "/")}`,
+    sameAs: Object.values(business.social),
     telephone: business.phoneHref,
     email: business.email,
     address: {
@@ -121,6 +123,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         </main>
         <Footer locale={lang} />
         <MobileCallToAction locale={lang} />
+        <BackToTop label={dict.nav.backToTop} />
         <CookieBanner labels={dict.cookies} privacyHref={localePath(lang, "/datenschutz")} />
       </body>
     </html>

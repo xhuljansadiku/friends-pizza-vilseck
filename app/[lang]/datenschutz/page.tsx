@@ -436,6 +436,17 @@ export default async function DatenschutzPage({ params }: PageProps<"/[lang]/dat
               jeweiligen Anbieters.
             </p>
           </Sub>
+          <Sub title="Links zu sozialen Netzwerken">
+            <p>
+              Wir verlinken auf unsere Profile bei Instagram und Facebook
+              (Meta Platforms Ireland Limited, Merrion Road, Dublin 4, Irland).
+              Es handelt sich um einfache Links, nicht um eingebettete Plugins:
+              Erst wenn Sie einen Link anklicken, werden Sie zu dem jeweiligen
+              Netzwerk weitergeleitet und es werden Daten an Meta übermittelt.
+              Für die dortige Datenverarbeitung gilt die Datenschutzerklärung
+              von Meta.
+            </p>
+          </Sub>
         </Section>
       </div>
     </div>
