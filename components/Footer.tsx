@@ -1,9 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { business } from "@/lib/content";
+import { getDictionary } from "@/lib/dictionaries";
+import { localePath, type Locale } from "@/lib/i18n";
+import { getNavLinks } from "@/lib/navigation";
 
-export function Footer() {
+export function Footer({ locale }: { locale: Locale }) {
   const year = new Date().getFullYear();
+  const dict = getDictionary(locale);
+  const links = getNavLinks(locale, dict.nav);
 
   return (
     <footer className="bg-char px-6 py-12">
@@ -19,21 +24,29 @@ export function Footer() {
         </div>
 
         <p className="font-mono text-xs text-cream/60">
-          {business.address.line1}, {business.address.line2}
+          {business.address.full}
         </p>
 
-        <nav className="flex gap-6 font-mono text-xs uppercase tracking-wide text-cream/60" aria-label="Legal">
-          <Link href="/impressum" className="hover:text-gold">
+        <nav className="flex flex-wrap justify-center gap-6 font-mono text-xs uppercase tracking-wide text-cream/60" aria-label={dict.footer.footerNav}>
+          {links.map((item) => (
+            <Link key={item.href} href={item.href} className="hover:text-gold">
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <nav className="flex gap-6 font-mono text-xs uppercase tracking-wide text-cream/60" aria-label={dict.footer.legalNav}>
+          <Link href={localePath(locale, "/impressum")} className="hover:text-gold">
             Impressum
           </Link>
-          <Link href="/datenschutz" className="hover:text-gold">
+          <Link href={localePath(locale, "/datenschutz")} className="hover:text-gold">
             Datenschutz
           </Link>
         </nav>
       </div>
 
       <p className="mt-8 text-center font-mono text-xs text-cream/40">
-        © {year} {business.name}. All rights reserved.
+        © {year} {business.name}. {dict.footer.rights}
       </p>
     </footer>
   );

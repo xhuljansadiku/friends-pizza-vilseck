@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const siteUrl = "https://friends-pizza-vilseck.de";
+import { business } from "@/lib/content";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${siteUrl}/sitemap.xml`,
+    sitemap: `${business.url}/sitemap.xml`,
   };
 }

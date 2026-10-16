@@ -1,25 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { business } from "@/lib/content";
-
-const navItems = [
-  { href: "#menu", label: "Menu" },
-  { href: "#about", label: "About" },
-  { href: "#location", label: "Location" },
-  { href: "#contact", label: "Contact" },
-];
+import type { Dictionary } from "@/lib/dictionaries";
+import type { NavLink } from "@/lib/navigation";
 
 type MobileNavProps = {
   open: boolean;
   onClose: () => void;
   triggerRef: React.RefObject<HTMLButtonElement | null>;
+  links: NavLink[];
+  activeSegment: string | null;
+  nav: Dictionary["nav"];
 };
 
-export function MobileNav({ open, onClose, triggerRef }: MobileNavProps) {
+export function MobileNav({ open, onClose, triggerRef, links, activeSegment, nav }: MobileNavProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -70,7 +69,7 @@ export function MobileNav({ open, onClose, triggerRef }: MobileNavProps) {
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label="Site navigation"
+          aria-label={nav.siteNavigation}
           ref={dialogRef}
           className="fixed inset-0 z-50 bg-ink md:hidden"
           initial={{ opacity: 0 }}
@@ -92,7 +91,7 @@ export function MobileNav({ open, onClose, triggerRef }: MobileNavProps) {
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
-                aria-label="Close menu"
+                aria-label={nav.closeMenu}
                 className="flex h-11 w-11 items-center justify-center rounded-full text-cream hover:bg-cream/10"
               >
                 <X size={26} aria-hidden="true" />
@@ -100,20 +99,26 @@ export function MobileNav({ open, onClose, triggerRef }: MobileNavProps) {
             </div>
 
             <nav className="mt-12 flex flex-1 flex-col gap-2" aria-label="Primary">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={onClose}
-                  className="flex min-h-11 items-center border-b border-cream/10 py-4 font-display text-2xl font-semibold text-cream transition-colors hover:text-gold"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {links.map((item) => {
+                const active = item.segment === activeSegment;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onClose}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex min-h-11 items-center border-b border-cream/10 py-4 font-display text-2xl font-semibold transition-colors hover:text-gold ${
+                      active ? "text-gold" : "text-cream"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
 
             <Button href={business.orderUrl} external variant="primary" className="w-full">
-              Order online
+              {nav.order}
             </Button>
           </motion.div>
         </motion.div>

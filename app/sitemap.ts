@@ -1,26 +1,29 @@
 import type { MetadataRoute } from "next";
+import { business } from "@/lib/content";
+import { locales, localePath } from "@/lib/i18n";
+import { languageAlternates } from "@/lib/seo";
 
-const siteUrl = "https://friends-pizza-vilseck.de";
+const routes: {
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+}[] = [
+  { path: "/", changeFrequency: "monthly", priority: 1 },
+  { path: "/menu", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/contact", changeFrequency: "yearly", priority: 0.8 },
+  { path: "/about", changeFrequency: "yearly", priority: 0.6 },
+  { path: "/impressum", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/datenschutz", changeFrequency: "yearly", priority: 0.3 },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: siteUrl,
+  return routes.flatMap(({ path, changeFrequency, priority }) =>
+    locales.map((locale) => ({
+      url: `${business.url}${localePath(locale, path)}`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${siteUrl}/impressum`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${siteUrl}/datenschutz`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-  ];
+      changeFrequency,
+      priority,
+      alternates: { languages: languageAlternates(path) },
+    }))
+  );
 }

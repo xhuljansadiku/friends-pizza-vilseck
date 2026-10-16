@@ -3,22 +3,27 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { MobileNav } from "@/components/MobileNav";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { business } from "@/lib/content";
+import type { Dictionary } from "@/lib/dictionaries";
+import type { Locale } from "@/lib/i18n";
+import type { NavLink } from "@/lib/navigation";
 
-const navItems = [
-  { href: "#menu", label: "Menu" },
-  { href: "#about", label: "About" },
-  { href: "#location", label: "Location" },
-  { href: "#contact", label: "Contact" },
-];
+type HeaderProps = {
+  locale: Locale;
+  links: NavLink[];
+  nav: Dictionary["nav"];
+};
 
-export function Header() {
+export function Header({ locale, links, nav }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const segment = useSelectedLayoutSegment();
 
   useEffect(() => {
     function handleScroll() {
@@ -37,8 +42,8 @@ export function Header() {
           : "bg-cream/0"
       }`}
     >
-      <div className="mx-auto flex max-w-(--container-page) items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center" aria-label={`${business.name} home`}>
+      <div className="mx-auto flex max-w-(--container-page) items-center justify-between gap-4 px-6 py-4">
+        <Link href={links[0].href} className="flex items-center" aria-label={`${business.name} – ${nav.home}`}>
           <Image
             src="/logo.png"
             alt={business.name}
@@ -50,35 +55,54 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="group relative font-display text-sm font-semibold uppercase tracking-wide text-ink"
-            >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-gold transition-all duration-200 group-hover:w-full" />
-            </a>
-          ))}
+          {links.map((item) => {
+            const active = item.segment === segment;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className="group relative font-display text-sm font-semibold uppercase tracking-wide text-ink"
+              >
+                {item.label}
+                <span
+                  className={`absolute -bottom-1 left-0 h-[2px] bg-gold transition-all duration-200 group-hover:w-full ${
+                    active ? "w-full" : "w-0"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-4 md:flex">
+          <LanguageToggle locale={locale} label={nav.switchLanguage} />
           <Button href={business.orderUrl} external variant="primary">
-            Order online
+            {nav.order}
           </Button>
         </div>
 
-        <button
-          ref={triggerRef}
-          onClick={() => setMenuOpen(true)}
-          aria-label="Open menu"
-          className="flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-ink/5 md:hidden"
-        >
-          <Menu size={26} aria-hidden="true" />
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageToggle locale={locale} label={nav.switchLanguage} />
+          <button
+            ref={triggerRef}
+            onClick={() => setMenuOpen(true)}
+            aria-label={nav.openMenu}
+            className="flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-ink/5"
+          >
+            <Menu size={26} aria-hidden="true" />
+          </button>
+        </div>
       </div>
 
-      <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={triggerRef} />
+      <MobileNav
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        triggerRef={triggerRef}
+        links={links}
+        activeSegment={segment}
+        nav={nav}
+      />
     </header>
   );
 }

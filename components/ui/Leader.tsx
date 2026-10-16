@@ -4,7 +4,6 @@ type LeaderProps = {
   description?: string;
   tag?: string;
   tone?: "ink" | "cream";
-  available?: boolean;
 };
 
 export function Leader({
@@ -13,31 +12,10 @@ export function Leader({
   description,
   tag,
   tone = "ink",
-  available = true,
 }: LeaderProps) {
   const textTone = tone === "ink" ? "text-ink" : "text-cream";
   const mutedTone = tone === "ink" ? "text-ink/60" : "text-cream/60";
   const dotTone = tone === "ink" ? "border-ink/30" : "border-cream/30";
-
-  if (!available) {
-    return (
-      <div className="flex items-baseline gap-3 py-3">
-        <div className="flex flex-col">
-          <div className="flex items-baseline gap-2">
-            <span className="font-display text-base font-semibold text-red-600 line-through">
-              {label}
-            </span>
-            <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-red-600">
-              Not offered
-            </span>
-          </div>
-          {description && (
-            <span className={`font-body text-sm ${mutedTone}`}>{description}</span>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex items-baseline gap-3 py-3">
