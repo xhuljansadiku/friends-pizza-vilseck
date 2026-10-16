@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Cookie, ExternalLink, MapPin } from "lucide-react";
 import type { Dictionary } from "@/lib/dictionaries";
@@ -79,6 +79,20 @@ export function CookieBanner({ labels, privacyHref }: CookieBannerProps) {
   const [reopened, setReopened] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [maps, setMaps] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const open = ready && (!consent || reopened);
+
+  // While the banner is open the page behind is blurred, so lock scrolling
+  // and move focus into the dialog.
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    dialogRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
 
   useEffect(() => {
     function onOpen() {
@@ -90,7 +104,7 @@ export function CookieBanner({ labels, privacyHref }: CookieBannerProps) {
     return () => window.removeEventListener(consentOpenEvent, onOpen);
   }, []);
 
-  if (!ready || (consent && !reopened)) return null;
+  if (!open) return null;
 
   function choose(value: { maps: boolean }) {
     saveConsent(value);
@@ -99,68 +113,73 @@ export function CookieBanner({ labels, privacyHref }: CookieBannerProps) {
   }
 
   return (
-    <div
-      role="dialog"
-      aria-modal="false"
-      aria-labelledby="cookie-title"
-      className="surface-dark fixed inset-x-3 bottom-24 z-50 rounded-2xl border border-cream/15 bg-char p-5 text-cream shadow-2xl md:inset-x-auto md:bottom-6 md:left-6 md:max-w-md"
-    >
-      <div className="flex items-center gap-2">
-        <Cookie size={20} className="text-gold" aria-hidden="true" />
-        <h2 id="cookie-title" className="font-display text-lg font-bold">
-          {labels.title}
-        </h2>
-      </div>
-      <p className="mt-2 font-body text-sm text-cream/75">
-        {labels.text}{" "}
-        <Link href={privacyHref} className="underline hover:text-gold">
-          {labels.privacyLink}
-        </Link>
-      </p>
-
-      {showSettings && (
-        <div className="mt-4 space-y-3 border-t border-cream/10 pt-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="font-display text-sm font-bold">{labels.necessaryTitle}</p>
-              <p className="font-body text-xs text-cream/60">{labels.necessaryText}</p>
-            </div>
-            <Switch checked disabled label={`${labels.necessaryTitle}: ${labels.alwaysOn}`} />
-          </div>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="font-display text-sm font-bold">{labels.mapsTitle}</p>
-              <p className="font-body text-xs text-cream/60">{labels.mapsText}</p>
-            </div>
-            <Switch checked={maps} onChange={setMaps} label={labels.mapsTitle} />
-          </div>
-        </div>
-      )}
-
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        <button
-          type="button"
-          onClick={() => choose({ maps: false })}
-          className="min-h-11 rounded-full border-2 border-cream/40 px-4 font-display text-sm font-semibold text-cream transition-colors hover:bg-cream/10"
-        >
-          {labels.necessaryOnly}
-        </button>
-        <button
-          type="button"
-          onClick={() => choose({ maps: true })}
-          className="min-h-11 rounded-full bg-gold px-4 font-display text-sm font-semibold text-coal transition-colors hover:bg-gold-deep"
-        >
-          {labels.acceptAll}
-        </button>
-      </div>
-      <button
-        type="button"
-        onClick={() => (showSettings ? choose({ maps }) : setShowSettings(true))}
-        className="mt-2 w-full min-h-10 font-mono text-xs font-bold uppercase tracking-wider text-cream/70 underline-offset-4 hover:text-gold hover:underline"
+    <>
+      <div className="fixed inset-0 z-[45] bg-coal/30 backdrop-blur-md" aria-hidden="true" />
+      <div
+        ref={dialogRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cookie-title"
+        className="surface-dark fixed inset-x-3 bottom-4 z-50 rounded-2xl border border-cream/15 bg-char p-5 text-cream shadow-2xl outline-none md:inset-x-auto md:bottom-6 md:left-6 md:max-w-md"
       >
-        {showSettings ? labels.save : labels.settings}
-      </button>
-    </div>
+        <div className="flex items-center gap-2">
+          <Cookie size={20} className="text-gold" aria-hidden="true" />
+          <h2 id="cookie-title" className="font-display text-lg font-bold">
+            {labels.title}
+          </h2>
+        </div>
+        <p className="mt-2 font-body text-sm text-cream/75">
+          {labels.text}{" "}
+          <Link href={privacyHref} className="underline hover:text-gold">
+            {labels.privacyLink}
+          </Link>
+        </p>
+
+        {showSettings && (
+          <div className="mt-4 space-y-3 border-t border-cream/10 pt-4">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="font-display text-sm font-bold">{labels.necessaryTitle}</p>
+                <p className="font-body text-xs text-cream/60">{labels.necessaryText}</p>
+              </div>
+              <Switch checked disabled label={`${labels.necessaryTitle}: ${labels.alwaysOn}`} />
+            </div>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="font-display text-sm font-bold">{labels.mapsTitle}</p>
+                <p className="font-body text-xs text-cream/60">{labels.mapsText}</p>
+              </div>
+              <Switch checked={maps} onChange={setMaps} label={labels.mapsTitle} />
+            </div>
+          </div>
+        )}
+
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => choose({ maps: false })}
+            className="min-h-11 rounded-full border-2 border-cream/40 px-4 font-display text-sm font-semibold text-cream transition-colors hover:bg-cream/10"
+          >
+            {labels.necessaryOnly}
+          </button>
+          <button
+            type="button"
+            onClick={() => choose({ maps: true })}
+            className="min-h-11 rounded-full bg-gold px-4 font-display text-sm font-semibold text-coal transition-colors hover:bg-gold-deep"
+          >
+            {labels.acceptAll}
+          </button>
+        </div>
+        <button
+          type="button"
+          onClick={() => (showSettings ? choose({ maps }) : setShowSettings(true))}
+          className="mt-2 w-full min-h-10 font-mono text-xs font-bold uppercase tracking-wider text-cream/70 underline-offset-4 hover:text-gold hover:underline"
+        >
+          {showSettings ? labels.save : labels.settings}
+        </button>
+      </div>
+    </>
   );
 }
 
