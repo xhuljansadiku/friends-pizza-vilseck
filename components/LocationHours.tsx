@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/Reveal";
 import { OpeningStatus, WeekHours } from "@/components/OpeningHours";
 import { MapEmbed } from "@/components/Consent";
-import { business, openingHours } from "@/lib/content";
+import { business, directionsUrl, openingHours } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
 
@@ -15,12 +15,11 @@ export function LocationHours({ locale }: { locale: Locale }) {
   const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(
     business.address.full
   )}&hl=${locale}&output=embed`;
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-    business.address.full
-  )}`;
   const open = `${openingHours.opens}-${openingHours.closes}`;
   const serviceRows = [
     { label: location.deliveryLabel, value: location.deliveryValue },
+    { label: location.deliveryFeeLabel, value: location.deliveryFeeValue },
+    { label: location.minimumOrderLabel, value: location.minimumOrderValue },
     { label: location.pickupLabel, value: location.pickupValue },
     { label: location.paymentLabel, value: location.paymentValue },
   ];
@@ -44,7 +43,7 @@ export function LocationHours({ locale }: { locale: Locale }) {
           <OpeningStatus
             labels={dict.status}
             fallback={dict.hero.factHours}
-            className="mt-3 rounded-full border border-cream/15 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wide text-cream"
+            className="mt-3 rounded-full border border-cream/15 bg-cream/[0.04] px-3.5 py-1.5 font-body text-sm font-semibold text-cream"
           />
           <div className="mt-5">
             <WeekHours labels={location} />

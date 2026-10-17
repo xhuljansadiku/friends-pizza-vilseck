@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Bike } from "lucide-react";
+import { Bike, DollarSign, Euro, Phone, Star } from "lucide-react";
 import { OpeningStatus } from "@/components/OpeningHours";
 import { Stamp } from "@/components/ui/Stamp";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
-import { business } from "@/lib/content";
+import { business, googleReviews } from "@/lib/content";
 import type { Dictionary } from "@/lib/dictionaries";
 
 const textVariants = {
@@ -20,16 +20,31 @@ type HeroProps = {
   orderLabel: string;
   menuLabel: string;
   menuHref: string;
+  /** Google rating as shown in this locale, e.g. "5,0" */
+  ratingText: string;
+  /** Cheapest pizza, already formatted, e.g. "9,90 €" */
+  priceFrom: string;
 };
 
-export function Hero({ copy, statusLabels, orderLabel, menuLabel, menuHref }: HeroProps) {
+export function Hero({
+  copy,
+  statusLabels,
+  orderLabel,
+  menuLabel,
+  menuHref,
+  ratingText,
+  priceFrom,
+}: HeroProps) {
+  const rating = copy.rating
+    .replace("{rating}", ratingText)
+    .replace("{count}", String(googleReviews.count));
   const quickFacts = [
-    { icon: MapPin, label: `${business.address.street}, ${business.address.city}` },
-    { icon: Bike, label: copy.factService },
+    { icons: [Bike], label: copy.factDelivery },
+    { icons: [Euro, DollarSign], label: copy.factPayment },
   ];
 
   return (
-    <section className="relative overflow-hidden px-6 pt-12 pb-20 md:pt-20 md:pb-28">
+    <section className="relative overflow-hidden px-6 pt-12 pb-10 md:pt-20 md:pb-12">
       <div className="mx-auto grid max-w-(--container-page) items-center gap-12 md:grid-cols-2">
         <motion.div
           initial="hidden"
@@ -62,7 +77,19 @@ export function Hero({ copy, statusLabels, orderLabel, menuLabel, menuHref }: He
           <motion.div
             variants={textVariants}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start"
+            className="mt-6"
+          >
+            <OpeningStatus
+              labels={statusLabels}
+              fallback={copy.factHours}
+              className="rounded-full border border-ink/15 bg-ink/[0.04] px-3.5 py-1.5 font-body text-sm font-semibold text-ink"
+            />
+          </motion.div>
+
+          <motion.div
+            variants={textVariants}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-5 flex flex-wrap justify-center gap-4 md:justify-start"
           >
             <Button href={business.orderUrl} external variant="primary">
               {orderLabel}
@@ -72,15 +99,41 @@ export function Hero({ copy, statusLabels, orderLabel, menuLabel, menuHref }: He
             </Button>
           </motion.div>
 
+          <motion.a
+            variants={textVariants}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            // Mobile already has a call button in the sticky bottom bar
+            href={`tel:${business.phoneHref}`}
+            className="mt-4 hidden md:inline-flex items-center gap-2 font-body text-sm text-ink/70 transition-colors hover:text-ink"
+          >
+            <Phone size={14} aria-hidden="true" />
+            {copy.callPrefix}{" "}
+            <span className="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">
+              {business.phone}
+            </span>
+          </motion.a>
+
           <motion.div
             variants={textVariants}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mt-10 flex flex-col items-center gap-3 font-mono text-xs uppercase tracking-wide text-ink/70 sm:flex-row sm:gap-6 md:items-start"
+            className="mt-8 flex flex-col items-center gap-x-5 gap-y-2.5 border-t border-ink/10 pt-6 font-body text-sm text-ink/75 sm:flex-row sm:flex-wrap md:justify-start"
           >
-            <OpeningStatus labels={statusLabels} fallback={copy.factHours} />
-            {quickFacts.map(({ icon: Icon, label }) => (
+            <a
+              href={googleReviews.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 font-semibold text-ink underline-offset-4 hover:underline sm:w-full sm:justify-center md:justify-start"
+            >
+              <Star size={16} className="fill-gold text-gold" aria-hidden="true" />
+              {rating}
+            </a>
+            {quickFacts.map(({ icons, label }) => (
               <div key={label} className="flex items-center gap-2">
-                <Icon size={16} className="text-gold" aria-hidden="true" />
+                <span className="flex items-center" aria-hidden="true">
+                  {icons.map((Icon, i) => (
+                    <Icon key={i} size={16} className="text-gold" />
+                  ))}
+                </span>
                 {label}
               </div>
             ))}
@@ -106,6 +159,16 @@ export function Hero({ copy, statusLabels, orderLabel, menuLabel, menuHref }: He
               sizes="(min-width: 768px) 512px, 100vw"
               className="object-cover"
             />
+          </div>
+          <div
+            className="surface-dark absolute -bottom-5 -left-3 flex h-24 w-24 -rotate-12 flex-col items-center justify-center rounded-full border-2 border-dashed border-cream/40 bg-ink text-center text-cream shadow-lg ring-4 ring-ink md:-left-6 md:h-28 md:w-28"
+          >
+            <span className="font-mono text-[10px] uppercase tracking-widest text-cream/70 md:text-xs">
+              {copy.priceFrom}
+            </span>
+            <span className="font-display text-lg font-extrabold leading-tight text-gold md:text-xl">
+              {priceFrom}
+            </span>
           </div>
         </motion.div>
       </div>

@@ -22,20 +22,36 @@ const berlinClock = new Intl.DateTimeFormat("en-GB", {
   hourCycle: "h23",
 });
 
-/** "status:dayIndex" for the current time in Vilseck (Europe/Berlin). */
+const DAY = 24 * 60;
+
+/** "status:dayIndex:minutesUntilOpen" for the current time in Vilseck (Europe/Berlin). */
 function readSnapshot() {
   const parts = berlinClock.formatToParts(new Date());
   const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
   const day = weekOrder.indexOf(get("weekday"));
   const minutes = Number(get("hour")) * 60 + Number(get("minute"));
+  const opens = toMinutes(openingHours.opens);
+  const untilTomorrow = DAY - minutes + opens;
 
   let status: Status;
-  if (day === restDayIndex) status = "restDay";
-  else if (minutes < toMinutes(openingHours.opens)) status = "before";
-  else if (minutes < toMinutes(openingHours.closes)) status = "open";
-  else status = (day + 1) % 7 === restDayIndex ? "afterFriday" : "afterTomorrow";
+  let untilOpen = 0;
+  if (day === restDayIndex) {
+    status = "restDay";
+    untilOpen = untilTomorrow;
+  } else if (minutes < opens) {
+    status = "before";
+    untilOpen = opens - minutes;
+  } else if (minutes < toMinutes(openingHours.closes)) {
+    status = "open";
+  } else if ((day + 1) % 7 === restDayIndex) {
+    status = "afterFriday";
+    untilOpen = untilTomorrow + DAY;
+  } else {
+    status = "afterTomorrow";
+    untilOpen = untilTomorrow;
+  }
 
-  return `${status}:${day}`;
+  return `${status}:${day}:${untilOpen}`;
 }
 
 function subscribe(onChange: () => void) {
@@ -44,11 +60,11 @@ function subscribe(onChange: () => void) {
 }
 
 /** Null during server render and hydration; the live value right after. */
-function useOpeningState() {
+export function useOpeningState() {
   const snapshot = useSyncExternalStore(subscribe, readSnapshot, () => null);
   if (!snapshot) return null;
-  const [status, day] = snapshot.split(":");
-  return { status: status as Status, day: Number(day) };
+  const [status, day, untilOpen] = snapshot.split(":");
+  return { status: status as Status, day: Number(day), minutesUntilOpen: Number(untilOpen) };
 }
 
 const dotColor: Record<Status, string> = {

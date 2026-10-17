@@ -2,7 +2,8 @@ import { Stamp } from "@/components/ui/Stamp";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/Reveal";
 import { MenuItemRow } from "@/components/MenuItemRow";
-import { menu } from "@/lib/content";
+import Link from "next/link";
+import { business, menu } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import { localePath, type Locale } from "@/lib/i18n";
 
@@ -52,10 +53,16 @@ export function MenuPreview({ locale }: { locale: Locale }) {
           ))}
         </div>
 
-        <Reveal delay={0.2} className="mt-12 text-center md:text-left">
-          <Button href={localePath(locale, "/menu")} variant="primary">
-            {dict.common.fullMenu}
+        <Reveal delay={0.2} className="mt-12 flex flex-wrap justify-center gap-4 md:justify-start">
+          <Button href={business.orderUrl} external variant="primary">
+            {dict.nav.order}
           </Button>
+          <Link
+            href={localePath(locale, "/menu")}
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-cream px-6 py-3 font-display text-sm font-semibold tracking-wide text-cream transition-colors hover:bg-cream hover:text-coal"
+          >
+            {dict.common.fullMenu}
+          </Link>
         </Reveal>
       </div>
     </section>

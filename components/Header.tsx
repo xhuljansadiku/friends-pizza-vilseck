@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { MobileNav } from "@/components/MobileNav";
+import { MobileNav, type DrawerLabels } from "@/components/MobileNav";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { business } from "@/lib/content";
@@ -18,12 +18,14 @@ type HeaderProps = {
   locale: Locale;
   links: NavLink[];
   nav: Dictionary["nav"];
+  drawer: DrawerLabels;
 };
 
-export function Header({ locale, links, nav }: HeaderProps) {
+export function Header({ locale, links, nav, drawer }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const segment = useSelectedLayoutSegment();
 
   useEffect(() => {
@@ -35,8 +37,20 @@ export function Header({ locale, links, nav }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Expose the header height so sticky bars below it (menu categories) can sit right under it.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty("--header-h", `${header.offsetHeight}px`);
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header
+      ref={headerRef}
       className={`sticky top-0 z-40 transition-colors duration-300 ${
         scrolled
           ? "bg-cream/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(10,10,10,0.08)]"
@@ -105,6 +119,7 @@ export function Header({ locale, links, nav }: HeaderProps) {
         links={links}
         activeSegment={segment}
         nav={nav}
+        labels={drawer}
       />
     </header>
   );

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RestaurantJsonLd } from "@/components/RestaurantJsonLd";
 import { notFound } from "next/navigation";
 import { Contact } from "@/components/Contact";
 import { LocationHours } from "@/components/LocationHours";
@@ -19,6 +20,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
 
   return (
     <>
+      <RestaurantJsonLd locale={lang} />
       <Contact locale={lang} headingAs="h1" />
       <LocationHours locale={lang} />
     </>

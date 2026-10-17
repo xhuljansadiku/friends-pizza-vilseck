@@ -38,10 +38,11 @@ export function BurgerIcon(props: IconProps) {
 export function PastaIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
-      <ellipse cx="24" cy="30" rx="18" ry="9" />
-      <path d="M10 28c2-6 6-14 6-18M18 30c2-7 7-17 7-21M27 30c2-7 7-17 7-21M35 28c-1-5-4-12-5-16" />
-      <circle cx="18" cy="26" r="1.6" fill="currentColor" stroke="none" />
-      <circle cx="27" cy="24" r="1.6" fill="currentColor" stroke="none" />
+      <ellipse cx="24" cy="37" rx="19" ry="5" />
+      <path d="M12 35c0-6 5.4-10 12-10s12 4 12 10" />
+      <path d="M17 34c0-3.5 3-6 7-6s7 2.5 7 6" />
+      <path d="M24 28V6" />
+      <path d="M19.5 6v6a4.5 4.5 0 0 0 9 0V6" />
     </svg>
   );
 }
@@ -49,9 +50,23 @@ export function PastaIcon(props: IconProps) {
 export function SaladIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
-      <path d="M6 26a18 12 0 0 1 36 0Z" />
-      <path d="M6 26h36" />
-      <path d="M16 26c0-6 2-12 4-16M24 26c0-7 0-13 0-18M32 26c0-6-2-12-4-16" />
+      <path d="M5 24h38c0 9.4-8.5 17-19 17S5 33.4 5 24Z" />
+      <path d="M13 24c-1.5-6.5 1.5-11.5 8-13 1.5 6-1.5 11-8 13Z" />
+      <path d="M24 24c0-7.5 5-12.5 13-13 0 7.5-5 12-13 13Z" />
+      <circle cx="28" cy="7" r="2.4" fill="currentColor" stroke="none" />
+      <path d="M19 41.5h10" />
+    </svg>
+  );
+}
+
+export function DessertIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 22c0-7 5.4-12 12-12s12 5 12 12" />
+      <path d="M10 22h28" />
+      <path d="M13 22l11 22 11-22" />
+      <path d="M17 29h14M20.5 36h7" />
+      <circle cx="24" cy="6" r="2.4" fill="currentColor" stroke="none" />
     </svg>
   );
 }

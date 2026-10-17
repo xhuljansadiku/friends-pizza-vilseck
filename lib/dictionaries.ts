@@ -11,7 +11,7 @@ const en = {
     ogLocale: "en_US",
     menuTitle: "Menu & Prices",
     menuDescription:
-      "The full Friends Pizza menu with prices: 14 pizzas in M and XL, finger food, burgers, pasta, salads, dessert and drinks. Order for pickup or delivery in Vilseck.",
+      "The full Friends Pizza menu with prices: 15 pizzas in M and XL, finger food, burgers, pasta, salads, dessert and drinks. Order for pickup or delivery in Vilseck.",
     aboutTitle: "About Us",
     aboutDescription:
       "Friends Pizza is the pizzeria and delivery service on the Marktplatz in Vilseck, serving the town and Rose Barracks every day except Thursday.",
@@ -47,44 +47,67 @@ const en = {
     titleStart: "Pizza in Vilseck,",
     titleEnd: "made by",
     intro:
-      "Pizza in medium or XL, wings, fries, burgers and pasta, made to order on the Marktplatz. Pick it up or have it delivered anywhere in Vilseck and to Rose Barracks.",
+      "Pizza in M or XL, wings, burgers and pasta, fresh from the Marktplatz. Delivered across Vilseck and to Rose Barracks.",
     factHours: "16:00-23:00 · closed Thu",
-    factService: "Delivery & pickup",
+    callPrefix: "or call",
+    rating: "{rating} · {count} Google reviews",
+    factDelivery: "Delivery €2 · min. €15",
+    factPayment: "Cash (euro or dollar) or card",
+    priceFrom: "Pizza from",
     imageAlt: "Friends Pizza with rucola, mushrooms and parmesan, fresh from the oven",
   },
   highlights: [
     {
-      title: "Pickup or delivery",
-      description:
-        "Grab your order at the Marktplatz or let us bring it over. We deliver across Vilseck and to Rose Barracks, within about 5 km.",
+      fact: "€2",
+      title: "Delivery to Rose Barracks",
+      description: "Across Vilseck and to the base, about 5 km. Minimum order €15.",
+      cta: "Delivery area",
     },
     {
-      title: "14 pizzas, two sizes",
-      description:
-        "From a classic Margherita to the Supreme and our house Friends Pizza. Every pizza comes in M or XL, for one person or the whole table.",
+      fact: "12″ / 16″",
+      title: "15 pizzas, two sizes",
+      description: "Every pizza comes in M (12 inch) or XL (16 inch).",
+      cta: "See the pizzas",
     },
     {
-      title: "Cash or card",
-      description:
-        "Pay however you like, at the counter or at your door. We take cash and card for both pickup and delivery.",
+      fact: "4–11 pm",
+      title: "Open 6 days a week",
+      description: "Daily from 16:00 to 23:00. Thursday is our rest day.",
+      cta: "Opening hours",
     },
   ],
+  highlightsTitle: "Good to know",
   categories: {
     label: "Menu categories",
+    stamp: "Browse the menu",
+    title: "What are you craving?",
+    meta: "{count} items · from {price}",
   },
   gallery: {
     stamp: "From our kitchen",
     title: "Made fresh on the Marktplatz.",
     items: [
-      { caption: "Pizza in M or XL", alt: "A slice of pizza with rucola being lifted from the pie" },
-      { caption: "Burgers & finger food", alt: "Burger with crispy patty, lettuce and red onion on a sesame bun" },
-      { caption: "Marktplatz 30, Vilseck", alt: "Friends Pizza storefront on the Marktplatz in Vilseck" },
+      {
+        title: "Pizza, made to order",
+        meta: "{count} pizzas · from {price}",
+        alt: "Tossing pizza dough in the Friends Pizza kitchen in Vilseck",
+      },
+      {
+        title: "Burgers",
+        meta: "{count} burgers · from {price}",
+        alt: "Burger with crispy patty, lettuce and red onion on a sesame bun",
+      },
+      {
+        title: "Find us on the Marktplatz",
+        meta: "Marktplatz 30 · Get directions",
+        alt: "Friends Pizza storefront on the Marktplatz in Vilseck",
+      },
     ],
   },
   menuPreview: {
     stamp: "From the oven",
     title: "Our favourites",
-    intro: "A few pizzas to get you started. Prices for M / XL.",
+    intro: "A few pizzas to get you started. Prices for M (12″) / XL (16″).",
   },
   menu: {
     stamp: "Pickup & delivery",
@@ -92,6 +115,10 @@ const en = {
     intro:
       "Pizza, finger food, burgers, pasta, salads and drinks. Order online, call us, or pick up at the Marktplatz in Vilseck.",
     priceNote: "All prices include VAT. Drinks plus bottle deposit (Pfand).",
+    allergensTitle: "Allergens & additives",
+    allergensLabel: "Allergens and additives:",
+    additivesHeading: "Additives",
+    allergensHeading: "Allergens",
   },
   reviews: {
     stamp: "What people say",
@@ -116,11 +143,15 @@ const en = {
     restDayNote: "Thursday is our weekly rest day.",
     serviceTitle: "Delivery & payment",
     deliveryLabel: "Delivery area",
-    deliveryValue: "Vilseck & Rose Barracks (~5 km)",
+    deliveryValue: "Vilseck & Rose Barracks (~5\u00a0km)",
     pickupLabel: "Pickup",
     pickupValue: "Marktplatz 30",
     paymentLabel: "Payment",
-    paymentValue: "Cash or card",
+    paymentValue: "Cash (euro or dollar) or card",
+    deliveryFeeLabel: "Delivery fee",
+    deliveryFeeValue: "€2.00",
+    minimumOrderLabel: "Minimum order",
+    minimumOrderValue: "€15",
     mapTitle: "Map showing the Friends Pizza location in Vilseck",
   },
   status: {
@@ -129,6 +160,9 @@ const en = {
     afterTomorrow: "Closed now · opens tomorrow at {open}",
     afterFriday: "Closed now · opens Friday at {open}",
     restDay: "Closed today (rest day) · back Friday at {open}",
+    opensIn: "Closed now · opens in {time}",
+    hoursUnit: "h",
+    minutesUnit: "min",
   },
   contact: {
     stamp: "Get in touch",
@@ -137,6 +171,13 @@ const en = {
     email: "Email",
     follow: "Follow us",
     followOn: "Follow us on {network}",
+  },
+  notFound: {
+    stamp: "Error 404",
+    title: "This page went out for delivery.",
+    text: "We couldn't find what you were looking for. The menu is still right here, though.",
+    home: "Back to home",
+    menu: "View menu",
   },
   cookies: {
     title: "Cookies & privacy",
@@ -183,7 +224,7 @@ const de: Dictionary = {
     ogLocale: "de_DE",
     menuTitle: "Speisekarte & Preise",
     menuDescription:
-      "Die komplette Speisekarte von Friends Pizza mit Preisen: 14 Pizzen in M und XL, Fingerfood, Burger, Pasta, Salate, Dessert und Getränke. Zum Abholen oder mit Lieferung in Vilseck.",
+      "Die komplette Speisekarte von Friends Pizza mit Preisen: 15 Pizzen in M und XL, Fingerfood, Burger, Pasta, Salate, Dessert und Getränke. Zum Abholen oder mit Lieferung in Vilseck.",
     aboutTitle: "Über uns",
     aboutDescription:
       "Friends Pizza ist die Pizzeria und der Lieferservice am Marktplatz in Vilseck. Für die Stadt und die Rose Barracks, jeden Tag außer Donnerstag.",
@@ -219,44 +260,67 @@ const de: Dictionary = {
     titleStart: "Pizza in Vilseck,",
     titleEnd: "gemacht von",
     intro:
-      "Pizza in M oder XL, Wings, Pommes, Burger und Pasta, frisch auf Bestellung am Marktplatz zubereitet. Zum Abholen oder mit Lieferung in ganz Vilseck und zur Rose Barracks.",
+      "Pizza in M oder XL, Wings, Burger und Pasta, frisch vom Marktplatz. Geliefert in ganz Vilseck und zur Rose Barracks.",
     factHours: "16-23 Uhr · Do Ruhetag",
-    factService: "Lieferung & Abholung",
+    callPrefix: "oder anrufen:",
+    rating: "{rating} · {count} Google-Bewertungen",
+    factDelivery: "Lieferung 2 € · min. 15 €",
+    factPayment: "Bar (Euro oder Dollar) oder Karte",
+    priceFrom: "Pizza ab",
     imageAlt: "Friends Pizza mit Rucola, Champignons und Parmesan, frisch aus dem Ofen",
   },
   highlights: [
     {
-      title: "Abholen oder liefern lassen",
-      description:
-        "Holen Sie Ihre Bestellung am Marktplatz ab oder lassen Sie sie sich bringen. Wir liefern in ganz Vilseck und zur Rose Barracks, im Umkreis von etwa 5 km.",
+      fact: "2 €",
+      title: "Lieferung bis Rose Barracks",
+      description: "In ganz Vilseck und zur Rose Barracks, etwa 5 km. Mindestbestellwert 15 €.",
+      cta: "Liefergebiet",
     },
     {
-      title: "14 Pizzen, zwei Größen",
-      description:
-        "Von der klassischen Margherita bis zur Supreme und unserer Hauspizza Friends Pizza. Jede Pizza gibt es in M oder XL, für eine Person oder den ganzen Tisch.",
+      fact: "12″ / 16″",
+      title: "15 Pizzen, zwei Größen",
+      description: "Jede Pizza gibt es in M (12 Zoll) oder XL (16 Zoll).",
+      cta: "Zu den Pizzen",
     },
     {
-      title: "Bar oder mit Karte",
-      description:
-        "Bezahlen Sie, wie Sie möchten: an der Theke oder an der Haustür. Bei Abholung und Lieferung nehmen wir Bargeld und Karte.",
+      fact: "16–23 Uhr",
+      title: "6 Tage die Woche geöffnet",
+      description: "Täglich von 16:00 bis 23:00 Uhr. Donnerstag ist Ruhetag.",
+      cta: "Öffnungszeiten",
     },
   ],
+  highlightsTitle: "Gut zu wissen",
   categories: {
     label: "Kategorien der Speisekarte",
+    stamp: "Speisekarte entdecken",
+    title: "Worauf haben Sie Lust?",
+    meta: "{count} Sorten · ab {price}",
   },
   gallery: {
     stamp: "Aus unserer Küche",
     title: "Frisch gemacht am Marktplatz.",
     items: [
-      { caption: "Pizza in M oder XL", alt: "Ein Stück Pizza mit Rucola wird angehoben" },
-      { caption: "Burger & Fingerfood", alt: "Burger mit knusprigem Patty, Salat und roten Zwiebeln im Sesambrötchen" },
-      { caption: "Marktplatz 30, Vilseck", alt: "Ladenfront von Friends Pizza am Marktplatz in Vilseck" },
+      {
+        title: "Pizza, frisch auf Bestellung",
+        meta: "{count} Pizzen · ab {price}",
+        alt: "Pizzateig wird in der Küche von Friends Pizza in Vilseck geschwungen",
+      },
+      {
+        title: "Burger",
+        meta: "{count} Burger · ab {price}",
+        alt: "Burger mit knusprigem Patty, Salat und roten Zwiebeln im Sesambrötchen",
+      },
+      {
+        title: "So finden Sie uns",
+        meta: "Marktplatz 30 · Route planen",
+        alt: "Ladenfront von Friends Pizza am Marktplatz in Vilseck",
+      },
     ],
   },
   menuPreview: {
     stamp: "Aus dem Ofen",
     title: "Unsere Favoriten",
-    intro: "Ein paar Pizzen für den ersten Hunger. Preise für M / XL.",
+    intro: "Ein paar Pizzen für den ersten Hunger. Preise für M (12″) / XL (16″).",
   },
   menu: {
     stamp: "Abholung & Lieferung",
@@ -264,6 +328,10 @@ const de: Dictionary = {
     intro:
       "Pizza, Fingerfood, Burger, Pasta, Salate und Getränke. Online bestellen, anrufen oder am Marktplatz in Vilseck abholen.",
     priceNote: "Alle Preise inkl. MwSt. Getränke zzgl. Pfand.",
+    allergensTitle: "Allergene & Zusatzstoffe",
+    allergensLabel: "Allergene und Zusatzstoffe:",
+    additivesHeading: "Zusatzstoffe",
+    allergensHeading: "Allergene",
   },
   reviews: {
     stamp: "Das sagen unsere Gäste",
@@ -288,11 +356,15 @@ const de: Dictionary = {
     restDayNote: "Donnerstag ist unser wöchentlicher Ruhetag.",
     serviceTitle: "Lieferung & Bezahlung",
     deliveryLabel: "Liefergebiet",
-    deliveryValue: "Vilseck & Rose Barracks (~5 km)",
+    deliveryValue: "Vilseck & Rose Barracks (~5\u00a0km)",
     pickupLabel: "Abholung",
     pickupValue: "Marktplatz 30",
     paymentLabel: "Bezahlung",
-    paymentValue: "Bar oder Karte",
+    paymentValue: "Bar (Euro oder Dollar) oder Karte",
+    deliveryFeeLabel: "Liefergebühr",
+    deliveryFeeValue: "2,00 €",
+    minimumOrderLabel: "Mindestbestellwert",
+    minimumOrderValue: "15 €",
     mapTitle: "Karte mit dem Standort von Friends Pizza in Vilseck",
   },
   status: {
@@ -301,6 +373,9 @@ const de: Dictionary = {
     afterTomorrow: "Jetzt geschlossen · öffnet morgen um {open} Uhr",
     afterFriday: "Jetzt geschlossen · öffnet Freitag um {open} Uhr",
     restDay: "Donnerstag ist Ruhetag · ab Freitag {open} Uhr wieder für Sie da",
+    opensIn: "Gerade geschlossen · öffnet in {time}",
+    hoursUnit: "Std.",
+    minutesUnit: "Min.",
   },
   contact: {
     stamp: "Kontakt",
@@ -309,6 +384,13 @@ const de: Dictionary = {
     email: "E-Mail",
     follow: "Folgen Sie uns",
     followOn: "Folgen Sie uns auf {network}",
+  },
+  notFound: {
+    stamp: "Fehler 404",
+    title: "Diese Seite ist gerade unterwegs.",
+    text: "Wir konnten die Seite nicht finden. Die Speisekarte ist aber gleich hier.",
+    home: "Zur Startseite",
+    menu: "Zur Speisekarte",
   },
   cookies: {
     title: "Cookies & Datenschutz",

@@ -15,6 +15,7 @@ type ContactProps = {
 
 export function Contact({ locale, headingAs: Heading = "h2" }: ContactProps) {
   const dict = getDictionary(locale);
+  const [emailUser, emailDomain] = business.email.split("@");
   return (
     <section id="contact" className="px-6 py-20 md:py-28">
       <div className="mx-auto max-w-(--container-page) text-center">
@@ -25,7 +26,7 @@ export function Contact({ locale, headingAs: Heading = "h2" }: ContactProps) {
           </Heading>
         </Reveal>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 sm:max-w-xl sm:mx-auto">
+        <div className="mt-12 grid gap-6 sm:mx-auto sm:max-w-2xl sm:grid-cols-2">
           <Reveal delay={0.05}>
             <a href={`tel:${business.phoneHref}`} className="block">
               <TicketCard rotate="left" className="flex items-center gap-4 text-left">
@@ -42,10 +43,12 @@ export function Contact({ locale, headingAs: Heading = "h2" }: ContactProps) {
             <a href={`mailto:${business.email}`} className="block">
               <TicketCard rotate="right" className="flex items-center gap-4 text-left">
                 <Mail size={24} className="shrink-0 text-gold" aria-hidden="true" />
-                <div>
+                <div className="min-w-0">
                   <p className="font-mono text-xs uppercase tracking-wide text-ink/60">{dict.contact.email}</p>
-                  <p className="font-display text-lg font-bold text-ink break-all">
-                    {business.email}
+                  {/* If it has to wrap, wrap after the @ rather than mid-word */}
+                  <p className="font-display text-base font-bold text-ink sm:text-lg">
+                    {emailUser}@<wbr />
+                    {emailDomain}
                   </p>
                 </div>
               </TicketCard>

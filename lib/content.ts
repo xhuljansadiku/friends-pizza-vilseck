@@ -62,6 +62,11 @@ export const openingHours = {
   closedDay: "Thursday",
 } as const;
 
+/** Google Maps route to the shop. */
+export const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+  business.address.full
+)}`;
+
 export const deliveryArea = ["Vilseck", "Rose Barracks"] as const;
 export const deliveryRadiusKm = 5;
 
@@ -69,12 +74,13 @@ export const deliveryRadiusKm = 5;
 // The section shows the Google rating only until this list has entries.
 export const testimonials: Testimonial[] = [];
 
-// Mirrors the live menu at friendspizza-vilseck.de/menu (synced 2026-10-15).
+// Mirrors the live menu at friendspizza-vilseck.de/menu (synced 2026-10-15),
+// checked against the printed menu on 2026-10-17 (Veggie, Ham, Tuna Salad, Ben & Jerry's added).
 export const menu: MenuCategory[] = [
   {
     id: "pizza",
     label: "Pizza",
-    note: { en: "Prices for M / XL", de: "Preise für M / XL" },
+    note: { en: "M (12″) / XL (16″)", de: "M (12″) / XL (16″)" },
     items: [
       {
         name: "Pepperoni",
@@ -208,6 +214,24 @@ export const menu: MenuCategory[] = [
         priceXl: 24.9,
       },
       {
+        name: "Veggie Pizza",
+        description: {
+          en: "Tomato sauce, mozzarella, red onions, bell peppers, mushrooms, olives, banana peppers, arugula, parmesan",
+          de: "Tomatensauce, Mozzarella, rote Zwiebeln, Paprika, Champignons, Oliven, Bananenpaprika, Rucola, Parmesan",
+        },
+        price: 12.2,
+        priceXl: 23.9,
+      },
+      {
+        name: { en: "Ham Pizza", de: "Schinken-Pizza" },
+        description: {
+          en: "Tomato sauce, mozzarella, ham, mushrooms",
+          de: "Tomatensauce, Mozzarella, Schinken, Champignons",
+        },
+        price: 12.2,
+        priceXl: 23.9,
+      },
+      {
         name: { en: "Garlic Pizza Bread", de: "Knoblauch-Pizzabrot" },
         price: 5,
       },
@@ -287,8 +311,8 @@ export const menu: MenuCategory[] = [
     id: "salads",
     label: { en: "Salads", de: "Salate" },
     note: {
-      en: "Dressing: vinegar & oil or ranch yogurt",
-      de: "Dressing: Essig & Öl oder Ranch-Joghurt",
+      en: "Dressing: vinegar & oil, ranch or yogurt",
+      de: "Dressing: Essig & Öl, Ranch oder Joghurt",
     },
     items: [
       {
@@ -307,6 +331,15 @@ export const menu: MenuCategory[] = [
           de: "Grüner Salat, Tomaten, Gurken, Paprika, Zwiebeln, Parmesan",
         },
         price: 7.5,
+        allergens: "a,b",
+      },
+      {
+        name: { en: "Tuna Salad", de: "Thunfischsalat" },
+        description: {
+          en: "Green salad, tomatoes, cucumbers, tuna, onions, olives, lemon slice",
+          de: "Grüner Salat, Tomaten, Gurken, Thunfisch, Zwiebeln, Oliven, Zitronenscheibe",
+        },
+        price: 8.5,
         allergens: "a,b",
       },
     ],
@@ -331,6 +364,15 @@ export const menu: MenuCategory[] = [
     label: "Dessert",
     items: [
       { name: { en: "Strawberry Tiramisu", de: "Erdbeer-Tiramisu" }, price: 6, allergens: "a,b,d" },
+      {
+        name: "Ben & Jerry's",
+        portion: "500 ml",
+        description: {
+          en: "Chocolate Fudge Brownie, Cookie Dough, Topped Salted Caramel or Strawberry Cheesecake",
+          de: "Chocolate Fudge Brownie, Cookie Dough, Topped Salted Caramel oder Strawberry Cheesecake",
+        },
+        price: 9,
+      },
     ],
   },
   {
@@ -351,5 +393,37 @@ export const menu: MenuCategory[] = [
   },
 ];
 
+/**
+ * Legend for the codes in `MenuItem.allergens`, as printed on the in-store menu.
+ * Numbers are additives, letters are allergens (there is no "g").
+ */
+export const allergenLegend: { code: string; label: Localized }[] = [
+  { code: "1", label: { en: "colouring", de: "mit Farbstoff" } },
+  { code: "2", label: { en: "antioxidant", de: "mit Antioxidationsmittel" } },
+  { code: "3", label: { en: "preservative", de: "mit Konservierungsstoff" } },
+  { code: "4", label: { en: "flavour enhancer", de: "mit Geschmacksverstärker" } },
+  { code: "5", label: { en: "phosphate", de: "mit Phosphat" } },
+  { code: "6", label: { en: "with sweeteners", de: "mit Süßungsmittel" } },
+  { code: "7", label: { en: "modified starch", de: "modifizierte Stärke" } },
+  { code: "8", label: { en: "blackened", de: "geschwärzt" } },
+  { code: "a", label: { en: "gluten (wheat)", de: "glutenhaltiges Getreide (Weizen)" } },
+  { code: "b", label: { en: "milk, lactose", de: "Milch, Laktose" } },
+  { code: "c", label: { en: "fish", de: "Fisch" } },
+  { code: "d", label: { en: "egg", de: "Ei" } },
+  { code: "e", label: { en: "celery", de: "Sellerie" } },
+  { code: "f", label: { en: "nuts", de: "Schalenfrüchte (Nüsse)" } },
+  { code: "h", label: { en: "sulphites", de: "Schwefeldioxid, Sulfite" } },
+  { code: "i", label: { en: "soy", de: "Soja" } },
+  { code: "j", label: { en: "mustard", de: "Senf" } },
+  { code: "k", label: { en: "sesame", de: "Sesam" } },
+];
+
+/** Item count and lowest price. Sized items (pizzas) only, so garlic bread doesn't count as a pizza. */
+export function categorySummary(category: MenuCategory) {
+  const sized = category.items.filter((item) => item.priceXl);
+  const items = sized.length > 0 ? sized : category.items;
+  return { count: items.length, from: Math.min(...items.map((item) => item.price)) };
+}
+
 /** Category tiles on the home page; ids match menu category ids. */
-export const featuredCategoryIds = ["pizza", "burgers", "pasta", "salads", "drinks"] as const;
+export const featuredCategoryIds = ["pizza", "burgers", "pasta", "salads", "dessert", "drinks"] as const;

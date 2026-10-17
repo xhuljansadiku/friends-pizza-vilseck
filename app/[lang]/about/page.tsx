@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RestaurantJsonLd } from "@/components/RestaurantJsonLd";
 import { notFound } from "next/navigation";
 import { About } from "@/components/About";
 import { Highlights } from "@/components/Highlights";
@@ -20,6 +21,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
 
   return (
     <>
+      <RestaurantJsonLd locale={lang} />
       <About locale={lang} headingAs="h1" />
       <Highlights locale={lang} />
       <Testimonials locale={lang} />

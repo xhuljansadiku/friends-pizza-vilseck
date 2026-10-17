@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { RestaurantJsonLd } from "@/components/RestaurantJsonLd";
 import { MenuBoard } from "@/components/MenuBoard";
 import { getDictionary } from "@/lib/dictionaries";
 import { hasLocale } from "@/lib/i18n";
@@ -15,5 +16,10 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/menu">): P
 export default async function MenuPage({ params }: PageProps<"/[lang]/menu">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  return <MenuBoard locale={lang} headingAs="h1" />;
+  return (
+    <>
+      <RestaurantJsonLd locale={lang} />
+      <MenuBoard locale={lang} headingAs="h1" />
+    </>
+  );
 }
