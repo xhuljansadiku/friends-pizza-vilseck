@@ -4,7 +4,7 @@
 
 - [ ] **Picat online:** sistemi i porosive (DISH, `friends-pizza.order.app.hd.digital`) nuk ka picat 1–14. Pronari duhet të kontrollojë panelin e DISH.
 - [x] **Legjenda e alergjenëve:** marrë nga menuja e printuar (2026-10-17). Kodet dalin pranë çdo pjate te faqja Speisekarte, legjenda poshtë menusë (`allergenLegend` në `lib/content.ts`). "h) sulfide" u përkthye si Sulfite.
-- [ ] **Dallime menuja e printuar vs. faqja e vjetër:** Quattro Formaggi (printuar: feta, faqja: fontina) dhe Margherita (printuar: mini mozzarella, pa kripë). Tani mbetet versioni i faqes së vjetër. Pronari të thotë cili është i saktë.
+- [ ] **Dallime menuja e printuar vs. faqja e vjetër:** Quattro Formaggi u konfirmua me feta (2026-10-17) dhe u përditësua. Mbetet Margherita (printuar: mini mozzarella, pa kripë; faqja: mozzarella, me kripë). Pronari të thotë cili është i saktë.
 - [x] **Vlerësimet e Google:** vendosur të mos shtojmë citate. Seksioni tregon vetëm rating-un dhe numrin (`googleReviews` në `lib/content.ts`) me link te Google, ku vizitorët i lexojnë vetë. Rating-u dhe numri përditësohen me dorë kur ndryshojnë.
 - [x] **Tuna Salad (€8.50):** konfirmuar nga menuja e printuar dhe shtuar. Gjithashtu u shtuan Veggie Pizza, Ham Pizza, Ben & Jerry's, Liefergebühr 2 €, Mindestbestellwert 15 € (fletëpalosja thotë 10 €, por i saktë është 15 €, sipas përdoruesit 2026-10-17) dhe pagesa në dollarë.
 - [x] **Instagram / Facebook:** shtuar te footer-i, faqja Contact dhe `sameAs` për Google (`business.social` në `lib/content.ts`).

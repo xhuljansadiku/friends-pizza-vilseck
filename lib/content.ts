@@ -167,8 +167,8 @@ export const menu: MenuCategory[] = [
       {
         name: "Quattro Formaggi",
         description: {
-          en: "Tomato sauce, gorgonzola, fontina, mozzarella, parmigiano reggiano",
-          de: "Tomatensauce, Gorgonzola, Fontina, Mozzarella, Parmigiano Reggiano",
+          en: "Tomato sauce, gorgonzola, feta, mozzarella, parmigiano reggiano",
+          de: "Tomatensauce, Gorgonzola, Feta, Mozzarella, Parmigiano Reggiano",
         },
         price: 12.2,
         priceXl: 24.9,
